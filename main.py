@@ -25,7 +25,16 @@ def get_weather():
         clock.config(text=current_time)
         time_label.config(text="LOCAL TIME")
         
+        api_key = "59eb3a0d6df42165038b541452652f89"
+        api = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lng}&appid={api_key}"
         
+        jason_data = requests.get(api).json()
+        condition = jason_data["weather"][0]["main"]
+        description = jason_data["weather"][0]["description"]
+        temp = int(jason_data["main"]["temp"]-273.15)
+        pressure = jason_data["main"]["pressure"]
+        humidity = jason_data["main"]["humidity"]
+        wind = jason_data["main"]["wind"]
         
     except Exception as error:
         print(error)

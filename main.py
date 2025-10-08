@@ -26,15 +26,23 @@ def get_weather():
         time_label.config(text="LOCAL TIME")
         
         api_key = "59eb3a0d6df42165038b541452652f89"
-        api = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lng}&appid={api_key}"
+        api = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lng}&appid={api_key}&units=metric"
         
         jason_data = requests.get(api).json()
         condition = jason_data["weather"][0]["main"]
         description = jason_data["weather"][0]["description"]
-        temp = int(jason_data["main"]["temp"]-273.15)
+        temp = int(jason_data["main"]["temp"])
         pressure = jason_data["main"]["pressure"]
         humidity = jason_data["main"]["humidity"]
-        wind = jason_data["main"]["wind"]
+        wind = jason_data["wind"]["speed"]
+        
+        
+        temp_label.config(text=f"{temp} °")
+        condition_label.config(text=f"{condition} | FEELS LIKE {temp} °")
+        wind_label.config(text=wind)
+        humidity_label.config(text=humidity)
+        description_label.config(text=description)
+        pressure_label.config(text=pressure)
         
     except Exception as error:
         print(error)
@@ -91,8 +99,8 @@ label4.place(x=670, y=400)
 
 temp_label = tk.Label(root, font=("arial", 70, "bold"), fg="#e355cd")
 temp_label.place(x=590, y=170)
-condition_lable = tk.Label(root, font=("arial", 15, "bold"), fg="#4b4bcc")
-condition_lable.place(x=590, y=270)
+condition_label = tk.Label(root, font=("arial", 15, "bold"), fg="#4b4bcc")
+condition_label.place(x=590, y=270)
 
 wind_label = tk.Label(root, text="...", font=("arial", 20, "bold"), bg="#1ab5ef", fg="#404040")
 wind_label.place(x=120, y=430)

@@ -18,6 +18,15 @@ def get_weather():
         result = obj.timezone_at(lng=lng, lat=lat)
         city_label.config(text=result.split("/")[1])
         print(result)
+        
+        home = pytz.timezone(result)
+        local_time = datetime.now(home)
+        current_time = local_time.strftime("%I:%M %p")
+        clock.config(text=current_time)
+        time_label.config(text="LOCAL TIME")
+        
+        
+        
     except Exception as error:
         print(error)
         messagebox.showerror("weatherApp", "Invalid Entry!")
@@ -28,8 +37,8 @@ root.geometry("900x500+300+200")
 root.resizable(False, False)
 
 search_image = tk.PhotoImage(file="search.png")
-search_image_lable = tk.Label(root, image=search_image)
-search_image_lable.pack(pady=20, side=tk.TOP)
+search_image_label = tk.Label(root, image=search_image)
+search_image_label.pack(pady=20, side=tk.TOP)
 
 
 textfield = tk.Entry(root, justify="center", width=17, font=("poppins", 25, "bold"), bg="#404040", fg="white", border=0)
@@ -52,8 +61,8 @@ frame_label.pack(pady=10, side=tk.TOP)
 city_label = tk.Label(root, font=("arial", 40, "bold"), fg="#e355cd")
 city_label.place(x=120, y=160)
 
-time_lable = tk.Label(root, font=("arial", 20, "bold"), fg="#4b4bcc")
-time_lable.place(x=120, y=230)
+time_label = tk.Label(root, font=("arial", 20, "bold"), fg="#4b4bcc")
+time_label.place(x=120, y=230)
 
 clock = tk.Label(root, font=("Helvetica", 20), fg="#4b4bcc")
 clock.place(x=120, y=270)
